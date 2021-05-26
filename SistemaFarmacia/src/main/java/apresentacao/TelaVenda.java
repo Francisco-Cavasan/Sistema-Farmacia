@@ -1,12 +1,10 @@
 package apresentacao;
 
-import br.univates.system32.Formatacao;
 import br.univates.system32.db.DataBaseException;
-import br.univates.system32.db.DuplicateKeyException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.Funcionario;
-import negocio.Venda;
+
 import persistencia.ProdutoDaoSQL;
 import persistencia.VendaDaoSQL;
 
@@ -274,20 +272,20 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_descontoFPropertyChange
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        long cpfFunc = funci.getCPF();
-        String temp = cpfF.getText().replace(".", "").replace("-", "");
-        long cpfCliente = Long.parseLong(temp);
-        int codProd = Integer.parseInt(codProdF.getText());
-        double valor = Double.parseDouble(valorFinal.getText());
-        String data = Formatacao.getDataAtual();
-        int quantidade = Integer.parseInt(quantidadeF.getText());
-        Venda venda = new Venda(cpfFunc, cpfCliente, codProd, valor, data, quantidade);
-        try {
-            vendaDao.create(venda);
-        } catch (DataBaseException | DuplicateKeyException ex) {
-            Warning w = new Warning(ex.getMessage());
-            w.setVisible(true);
-        }
+//        long cpfFunc = funci.getCPF();
+//        String temp = cpfF.getText().replace(".", "").replace("-", "");
+//        long cpfCliente = Long.parseLong(temp);
+//        int codProd = Integer.parseInt(codProdF.getText());
+//        double valor = Double.parseDouble(valorFinal.getText());
+//        String data = Formatacao.getDataAtual();
+//        int quantidade = Integer.parseInt(quantidadeF.getText());
+//        Venda venda = new Venda(cpfFunc, cpfCliente, codProd, valor, data, quantidade);
+//        try {
+//            vendaDao.create(venda);
+//        } catch (DataBaseException | DuplicateKeyException ex) {
+//            Warning w = new Warning(ex.getMessage());
+//            w.setVisible(true);
+//        }
 
     }//GEN-LAST:event_confirmActionPerformed
 

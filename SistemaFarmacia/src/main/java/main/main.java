@@ -11,8 +11,8 @@ public class main {
     public static void main(String[] args) throws DataBaseException, DuplicateKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         SistemaFarmacia s = SistemaFarmacia.getInstance();  
         
-        //s.setSplashPath("images/icone.png");
+        s.setSplashPath("/resources/images/icone.png");
         s.start();
-
+    
     }
 }

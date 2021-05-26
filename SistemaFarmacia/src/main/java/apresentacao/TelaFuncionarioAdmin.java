@@ -1,7 +1,10 @@
 package apresentacao;
 
 import br.univates.system32.db.DataBaseException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import negocio.Funcionario;
 import persistencia.DaoFactory;
 import persistencia.FuncionarioDaoSQL;
@@ -218,7 +221,7 @@ public class TelaFuncionarioAdmin extends javax.swing.JFrame {
             tela = new TelaLogin();
             tela.setVisible(true);
             dispose();
-        } catch (DataBaseException ex) {
+        } catch (DataBaseException | IOException ex) {
             System.out.println(ex.getMessage());
         }
 

@@ -144,10 +144,21 @@
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu7">
+            <Menu class="javax.swing.JMenu" name="jRelatorioClientes">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jMenu7"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Clientes"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jRelatorioClientesMouseClicked"/>
+              </Events>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="jMenu2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Funcion&#xe1;rios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu2MouseClicked"/>
+              </Events>
             </Menu>
           </SubComponents>
         </Menu>
@@ -155,11 +166,26 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Listagem"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu5MouseClicked"/>
+          </Events>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu6">
+            <Menu class="javax.swing.JMenu" name="listagemClientes">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jMenu6"/>
+                <Property name="text" type="java.lang.String" value="Listagem de Clientes"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listagemClientesMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listagemClientesActionPerformed"/>
+              </Events>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="listagemFuncionarios">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Listagem de Funcion&#xe1;rios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listagemFuncionariosMouseClicked"/>
+              </Events>
             </Menu>
           </SubComponents>
         </Menu>
@@ -247,15 +273,15 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
                       <Component id="addProduto" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="263" max="32767" attributes="0"/>
-                      <Component id="valorFinal" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" pref="263" max="32767" attributes="0"/>
+                      <Component id="valorFinal" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -269,12 +295,12 @@
                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="addProduto" alignment="0" pref="59" max="32767" attributes="0"/>
-                      <Component id="valorFinal" alignment="0" max="32767" attributes="0"/>
+                      <Component id="addProduto" pref="59" max="32767" attributes="0"/>
+                      <Component id="valorFinal" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

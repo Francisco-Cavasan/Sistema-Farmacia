@@ -1,6 +1,4 @@
-create database SistemaFarmacia with owner = postgres enconding = 'UTF8' CONNECTION LIMIT = -1;
-
-create  table if not exists produto (codigo int not null, nome varchar(50) not null, fabricante varchar(45) not null, quantidade int not null, descricao varchar(100), valor decimal(11,3) not null,
+ create  table if not exists produto (codigo int not null, nome varchar(50) not null, fabricante varchar(45) not null, quantidade int not null, descricao varchar(100), valor decimal(11,3) not null,
     primary key(codigo));
 
 create  table if not exists funcionario (CPF Bigint not null, nome varchar(50) not null, hash varchar(150) not null,nascimento date not null, setor varchar(45) not null, funcao varchar(45), data_admissao date not null, sexo varchar(1) not null, admin boolean not null,
@@ -9,11 +7,18 @@ create  table if not exists funcionario (CPF Bigint not null, nome varchar(50) n
 create table if not exists cliente (CPF Bigint not null, nome varchar(50) not null, telefone varchar(20) not null, email varchar(70), data_cadastro timestamp not null, sexo varchar(1) not null,
     primary key(CPF));
 
-create  table if not exists vendas (cpf_func Bigint not null, id_prod int not null, cpf_cli Bigint not null, valor decimal(11,3), data date not null, quantidade int not null,
-    primary key(cpf_func, id_prod, cpf_cli),
+
+create  table if not exists vendas (id_Venda serial ,cpf_func Bigint not null, cpf_cli Bigint not null, data date not null,
+    primary key(id_Venda),
     foreign key(cpf_func) references funcionario(CPF),
-    foreign key(id_prod) references produto(codigo),
     foreign key(cpf_cli)references cliente(CPF));
+	
+
+
+create table if not exists itensVenda(id_Venda int not null, cod_Prod int not null, quantidade int not null, valor decimal(11,3),
+	primary key (id_Venda, cod_Prod),
+	foreign key (id_Venda) references vendas(id_Venda),
+	foreign key (cod_Prod) references produto(codigo));
 
 create  table if not exists setor(codigo int not null, descricao varchar(100) not null,
 primary key(codigo));

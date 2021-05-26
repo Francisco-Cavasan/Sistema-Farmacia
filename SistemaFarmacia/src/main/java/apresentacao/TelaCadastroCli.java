@@ -4,13 +4,17 @@ import br.univates.system32.Formatacao;
 import br.univates.system32.db.DataBaseException;
 import br.univates.system32.db.DuplicateKeyException;
 import java.util.ArrayList;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import negocio.Cliente;
 import persistencia.ClienteDaoSQL;
 
 public class TelaCadastroCli extends javax.swing.JFrame {
-
+    
     ClienteDaoSQL dao;
-
+    private Cliente cliente;
+    
     public TelaCadastroCli() throws DataBaseException {
         initComponents();
         dao = new ClienteDaoSQL();
@@ -21,9 +25,31 @@ public class TelaCadastroCli extends javax.swing.JFrame {
         sexoF.removeAllItems();
         sexoF.addItem("m");
         sexoF.addItem("f");
-        sexoF.addItem("n");
+        
+        tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        ListSelectionModel selectionModel = tabela.getSelectionModel();
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int row = tabela.getSelectedRow();
+                
+                if (row >= 0) {
+                    ClientesTableModel tableModel = (ClientesTableModel) tabela.getModel();
+                    cliente = tableModel.getClientes().get(tabela.getSelectedRow());
+                    cpfF2.setText((Long.toString(cliente.getCPF())));
+                    nomeF2.setText(cliente.getNome());
+                    emailF.setText(cliente.getEmail());
+                    telefone.setText(cliente.getTelefone());
+                    sexoF.setSelectedItem(cliente.getSexo());
+                }
+            }
+        });
+        
+        tabela.getSelectionModel().setSelectionInterval(0, 0);
+        
     }
-
+    
     public void atualizarTabela() {
         ArrayList<Cliente> clientesS = new ArrayList();
         try {
@@ -37,7 +63,7 @@ public class TelaCadastroCli extends javax.swing.JFrame {
         tabela.revalidate();
         tabela.repaint();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -59,7 +85,7 @@ public class TelaCadastroCli extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        update = new javax.swing.JButton();
+        novo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -172,10 +198,10 @@ public class TelaCadastroCli extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabela);
 
-        update.setText("Atualizar tabela");
-        update.addActionListener(new java.awt.event.ActionListener() {
+        novo.setText("Novo");
+        novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateActionPerformed(evt);
+                novoActionPerformed(evt);
             }
         });
 
@@ -189,8 +215,8 @@ public class TelaCadastroCli extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(update)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(novo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(delete)
                         .addGap(12, 12, 12)
                         .addComponent(edit)
@@ -215,7 +241,7 @@ public class TelaCadastroCli extends javax.swing.JFrame {
                     .addComponent(delete)
                     .addComponent(edit)
                     .addComponent(register)
-                    .addComponent(update))
+                    .addComponent(novo))
                 .addContainerGap())
         );
 
@@ -240,10 +266,9 @@ public class TelaCadastroCli extends javax.swing.JFrame {
             Cliente cliente = new Cliente(nome, cpf, fone, email, data, sexo);
             try {
                 dao.create(cliente);
-            } catch (DataBaseException ex) {
+                atualizarTabela();
+            } catch (DataBaseException | DuplicateKeyException ex) {
                 System.out.println(ex.getMessage());
-            } catch (DuplicateKeyException ex) {
-
             }
         } else {
             Warning w = new Warning("Favor preencher todos os campos");
@@ -273,6 +298,7 @@ public class TelaCadastroCli extends javax.swing.JFrame {
             Cliente cliente = new Cliente(nome, cpf, fone, email, data, sexo);
             try {
                 dao.edit(cliente);
+                atualizarTabela();
             } catch (DataBaseException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -300,6 +326,7 @@ public class TelaCadastroCli extends javax.swing.JFrame {
             Cliente cliente = new Cliente(nome, cpf, fone, email, data, sexo);
             try {
                 dao.delete(cliente);
+                atualizarTabela();
             } catch (DataBaseException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -309,9 +336,13 @@ public class TelaCadastroCli extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteActionPerformed
 
-    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        atualizarTabela();
-    }//GEN-LAST:event_updateActionPerformed
+    private void novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoActionPerformed
+        cpfF2.setText("");
+        nomeF2.setText("");
+        emailF.setText("");
+        telefone.setText("");
+        sexoF.setSelectedItem("m");
+    }//GEN-LAST:event_novoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -328,10 +359,10 @@ public class TelaCadastroCli extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nomeF2;
+    private javax.swing.JButton novo;
     private javax.swing.JButton register;
     private javax.swing.JComboBox<String> sexoF;
     private javax.swing.JTable tabela;
     private br.univates.system32.components.JMyFoneField telefone;
-    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }

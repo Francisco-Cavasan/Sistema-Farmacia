@@ -5,6 +5,9 @@ import br.univates.system32.app.Application;
 import br.univates.system32.app.ApplicationProcess;
 import br.univates.system32.app.FatalSystemException;
 import br.univates.system32.db.DataBaseException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SistemaFarmacia extends Application {
 
@@ -23,7 +26,7 @@ public class SistemaFarmacia extends Application {
         this.addFirstExecutionProcess(new ApplicationProcess("Criando esquema do banco de dados.") {
             @Override
             public void run() throws FatalSystemException {
-                createDataBaseSchemaGenerationProcess("/persistencia/sql.sql");
+                createDataBaseSchemaGenerationProcess("/resources/sql.sql");
             }
         });
     }
@@ -36,7 +39,7 @@ public class SistemaFarmacia extends Application {
                 try {
                     TelaLogin tela = new TelaLogin();
                     tela.setVisible(true);
-                } catch (DataBaseException ex) {
+                } catch (DataBaseException | IOException ex) {
                     System.out.println("erro " + ex.getMessage());
                 }
             }

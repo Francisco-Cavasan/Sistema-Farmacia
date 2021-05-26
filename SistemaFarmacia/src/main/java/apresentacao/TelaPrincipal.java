@@ -3,23 +3,41 @@ package apresentacao;
 import br.univates.system32.Formatacao;
 import br.univates.system32.db.DataBaseException;
 import br.univates.system32.db.DuplicateKeyException;
+import br.univates.system32.reports.Report;
+import br.univates.system32.reports.ReportManager;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.SistemaFarmacia;
 import negocio.Funcionario;
+import negocio.ItensVenda;
+import negocio.Produto;
 import negocio.Venda;
+import persistencia.ItensVendaDaoSQL;
 import persistencia.ProdutoDaoSQL;
 import persistencia.VendaDaoSQL;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
     private Funcionario funcionario;
-    VendaDaoSQL vendaDao;
+    private VendaDaoSQL vendaDao;
+    private ItensVendaDaoSQL itensDao;
+    private ArrayList<Produto> produtos;
+    private ProdutoDaoSQL produtoDao;
 
     public TelaPrincipal(Funcionario funcionario) throws DataBaseException {
         initComponents();
         vendaDao = new VendaDaoSQL();
+        itensDao = new ItensVendaDaoSQL();
         this.funcionario = funcionario;
-
+        produtos = new ArrayList();
+        produtoDao = new ProdutoDaoSQL();
+        pagamento.removeAllItems();
+        pagamento.addItem("Crédito");
+        pagamento.addItem("Débito");
+        pagamento.addItem("Cartão FarmaPlus");
+        pagamento.addItem("Dinheiro");
         if (funcionario.getAdmin() == false) {
             menuFunc.setEnabled(false);
             menuCliente.setEnabled(true);
@@ -73,9 +91,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu16 = new javax.swing.JMenu();
         jMenu17 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
+        jRelatorioClientes = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
+        listagemClientes = new javax.swing.JMenu();
+        listagemFuncionarios = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
 
@@ -195,7 +215,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(64, 64, 64)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                     .addComponent(valorFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -207,11 +227,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                     .addComponent(valorFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         confirm.setText("Fechar compra");
@@ -323,15 +343,51 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Relatórios");
 
-        jMenu7.setText("jMenu7");
-        jMenu4.add(jMenu7);
+        jRelatorioClientes.setText("Relatório de Clientes");
+        jRelatorioClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRelatorioClientesMouseClicked(evt);
+            }
+        });
+        jMenu4.add(jRelatorioClientes);
+
+        jMenu2.setText("Relatório de Funcionários");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu4.add(jMenu2);
 
         MenuBar.add(jMenu4);
 
         jMenu5.setText("Listagem");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
 
-        jMenu6.setText("jMenu6");
-        jMenu5.add(jMenu6);
+        listagemClientes.setText("Listagem de Clientes");
+        listagemClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listagemClientesMouseClicked(evt);
+            }
+        });
+        listagemClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listagemClientesActionPerformed(evt);
+            }
+        });
+        jMenu5.add(listagemClientes);
+
+        listagemFuncionarios.setText("Listagem de Funcionários");
+        listagemFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listagemFuncionariosMouseClicked(evt);
+            }
+        });
+        jMenu5.add(listagemFuncionarios);
 
         MenuBar.add(jMenu5);
 
@@ -373,11 +429,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProdutoActionPerformed
+        if (quantidadeF.getText().isBlank() || codProdF.getText().isBlank() || cpfF.getText().isBlank()) {
+            Warning w = new Warning("Favor preencher todos os campos corretamente");
+            w.setVisible(true);
+        }
         try {
-            TabelaProdutos tela = new TabelaProdutos();
-            tela.setVisible(true);
+            Produto prod = produtoDao.read(codProdF.getInteger());
+            produtos.add(prod);
+            log.append(prod.getNome() + "\n");
+            Double valor = 0.0;
+            for (Produto produto : produtos) {
+                valor += Double.parseDouble(produto.getValor()) * Integer.parseInt(quantidadeF.getText());
+            }
+            valorFinal.setDouble(valor);
         } catch (DataBaseException ex) {
-            System.out.println("Erro: " + ex.getMessage());
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addProdutoActionPerformed
 
@@ -402,16 +468,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_descontoFPropertyChange
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
+
+        String idVenda = "default";
         long cpfFunc = funcionario.getCPF();
-        String temp = cpfF.getText().replace(".", "").replace("-", "");
-        long cpfCliente = Long.parseLong(temp);
-        int codProd = Integer.parseInt(codProdF.getText());
-        double valor = Double.parseDouble(valorFinal.getText());
+        long cpfCliente = Long.parseLong(cpfF.getText().replace(".", "").replace("-", ""));
         String data = Formatacao.getDataAtual();
-        int quantidade = Integer.parseInt(quantidadeF.getText());
-        Venda venda = new Venda(cpfFunc, cpfCliente, codProd, valor, data, quantidade);
+        Venda venda = new Venda(idVenda, cpfFunc, cpfCliente, data);
         try {
             vendaDao.create(venda);
+            ArrayList<Venda> vendas = vendaDao.readAll();
+            Venda temp = vendas.get(vendas.size() - 1);
+            for (Produto produto : produtos) {
+                ItensVenda itens = new ItensVenda(temp.getIdVenda(), produto.getCodigo(), Integer.parseInt(quantidadeF.getText()), Double.parseDouble(produto.getValor()));
+                itensDao.create(itens);
+            }
         } catch (DataBaseException | DuplicateKeyException ex) {
             Warning w = new Warning(ex.getMessage());
             w.setVisible(true);
@@ -528,6 +598,76 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuFuncaoMouseClicked
 
+    private void listagemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listagemClientesActionPerformed
+
+    }//GEN-LAST:event_listagemClientesActionPerformed
+
+    private void listagemClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listagemClientesMouseClicked
+
+        Report r = new Report() {
+            @Override
+            public HashMap getParameters() {
+                return new HashMap();
+            }
+
+            @Override
+            public String getPath() {
+                return "/resources/reports/ListagemClientes.jrxml";
+            }
+
+        };
+        ReportManager rm = new ReportManager();
+
+        try {
+            rm.setDataBaseConnection(SistemaFarmacia.getInstance().getDataBaseManager().getConnection());
+        } catch (DataBaseException ex) {
+            System.out.println("erro: " + ex.getMessage());
+        }
+        rm.createReport(r);
+    }//GEN-LAST:event_listagemClientesMouseClicked
+
+    private void jRelatorioClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRelatorioClientesMouseClicked
+        TelaRelatorioClientes tela = new TelaRelatorioClientes();
+        tela.setVisible(true);
+    }//GEN-LAST:event_jRelatorioClientesMouseClicked
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void listagemFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listagemFuncionariosMouseClicked
+        Report r = new Report() {
+            @Override
+            public HashMap getParameters() {
+                return new HashMap();
+            }
+
+            @Override
+            public String getPath() {
+                return "/resources/reports/ListagemFuncionarios.jrxml";
+            }
+
+        };
+        ReportManager rm = new ReportManager();
+
+        try {
+            rm.setDataBaseConnection(SistemaFarmacia.getInstance().getDataBaseManager().getConnection());
+        } catch (DataBaseException ex) {
+            System.out.println("erro: " + ex.getMessage());
+        }
+        rm.createReport(r);
+    }//GEN-LAST:event_listagemFuncionariosMouseClicked
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        TelaRelatorioFuncionarios tela;
+        try {
+            tela = new TelaRelatorioFuncionarios();
+            tela.setVisible(true);
+        } catch (DataBaseException ex) {
+            System.out.println("erro: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jMenu2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;
@@ -547,11 +687,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu15;
     private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu17;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -560,7 +699,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JPopupMenu jPopupMenu4;
     private javax.swing.JPopupMenu jPopupMenu5;
+    private javax.swing.JMenu jRelatorioClientes;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenu listagemClientes;
+    private javax.swing.JMenu listagemFuncionarios;
     private javax.swing.JTextArea log;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuCliente1;

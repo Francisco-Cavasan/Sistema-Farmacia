@@ -3,20 +3,17 @@ package negocio;
 
 public class Venda {
     
+    private String idVenda;
     private long cpfFunc;
     private long cpfCli;
-    private int codProd;
-    private double valor;
     private String data;
-    private int quantidade;
 
-    public Venda(long cpfFunc, long cpfCli, int codProd, double valor, String data, int quantidade) {
+
+    public Venda(String idVenda, long cpfFunc, long cpfCli, String data) {
+       this.idVenda = idVenda;
         this.cpfFunc = cpfFunc;
         this.cpfCli = cpfCli;
-        this.codProd = codProd;
-        this.valor = valor;
         this.data = data;
-        this.quantidade = quantidade;
     }
 
     public long getCpfFunc() {
@@ -27,28 +24,20 @@ public class Venda {
         this.cpfFunc = cpfFunc;
     }
 
+    public String getIdVenda() {
+        return idVenda;
+    }
+
+    public void setIdVenda(String idVenda) {
+        this.idVenda = idVenda;
+    }
+
     public long getCpfCli() {
         return cpfCli;
     }
 
     public void setCpfCli(long cpfCli) {
         this.cpfCli = cpfCli;
-    }
-
-    public int getCodProd() {
-        return codProd;
-    }
-
-    public void setCodProd(int codProd) {
-        this.codProd = codProd;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
     }
 
     public String getData() {
@@ -59,13 +48,6 @@ public class Venda {
         this.data = data;
     }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
     
     
     

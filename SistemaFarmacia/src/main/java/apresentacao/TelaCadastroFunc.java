@@ -376,6 +376,9 @@ public class TelaCadastroFunc extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
         try {
             String temp = cpfF.getText().replace(".", "");
