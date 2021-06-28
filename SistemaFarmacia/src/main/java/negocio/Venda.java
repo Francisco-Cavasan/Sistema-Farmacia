@@ -7,13 +7,23 @@ public class Venda {
     private long cpfFunc;
     private long cpfCli;
     private String data;
+    private int pagamento;
 
 
-    public Venda(String idVenda, long cpfFunc, long cpfCli, String data) {
+    public Venda(String idVenda, long cpfFunc, long cpfCli, String data, int pagamento) {
        this.idVenda = idVenda;
         this.cpfFunc = cpfFunc;
         this.cpfCli = cpfCli;
         this.data = data;
+        this.pagamento = pagamento;
+    }
+
+    public int getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(int pagamento) {
+        this.pagamento = pagamento;
     }
 
     public long getCpfFunc() {

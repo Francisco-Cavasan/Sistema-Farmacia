@@ -16,12 +16,13 @@ public class FuncaoDaoSQL implements FuncaoDao {
 
     public FuncaoDaoSQL() throws DataBaseException {
       
-        this.dbm = SistemaFarmacia.getInstance().getDataBaseManager(); }
+        this.dbm = SistemaFarmacia.getInstance().getDataBaseManager(); 
+    }
 
     @Override
     public void create(Funcao funcao) throws DataBaseException, DuplicateKeyException {
         if (funcao != null) {
-            String sql = "insert into funcao values(" + funcao.getCodigo() + " ,' " + funcao.getDescricao() + "'); ";
+            String sql = "insert into funcao values(" + funcao.getCodigo() + " ,' " + funcao.getDescricao().trim() + "'); ";
             dbm.runSQL(sql);
         } else {
             throw new DataBaseException("Função nula");
@@ -31,7 +32,7 @@ public class FuncaoDaoSQL implements FuncaoDao {
     @Override
     public void edit(Funcao funcao) throws DataBaseException {
         if (funcao != null) {
-            String sql = "update funcao set descricao='" + funcao.getDescricao() + "' where funcao.codigo = " + funcao.getCodigo() + "; ";
+            String sql = "update funcao set descricao='" + funcao.getDescricao().trim() + "' where funcao.codigo = " + funcao.getCodigo() + "; ";
             dbm.runSQL(sql);
         } else {
             throw new DataBaseException("Função nula");

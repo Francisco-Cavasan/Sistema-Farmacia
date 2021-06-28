@@ -1,16 +1,23 @@
 package apresentacao;
 
+import br.univates.system32.db.DataBaseException;
 import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import negocio.Fabricante;
 import negocio.Produto;
+import persistencia.FabricanteDaoSQL;
 
 public class ProdutosTableModel implements TableModel {
 
-    ArrayList<Produto> produtos;
+    private ArrayList<Produto> produtos;
+    private FabricanteDaoSQL dao;
+    private ArrayList<Fabricante> fabricantes;
 
-    public ProdutosTableModel(ArrayList<Produto> produtos) {
+    public ProdutosTableModel(ArrayList<Produto> produtos) throws DataBaseException {
         this.produtos = produtos;
+        dao = new FabricanteDaoSQL();
+        fabricantes = dao.readAll();
     }
 
     public ArrayList<Produto> getProdutos() {
@@ -20,8 +27,6 @@ public class ProdutosTableModel implements TableModel {
     public void setProdutos(ArrayList<Produto> produtos) {
         this.produtos = produtos;
     }
-    
-    
 
     @Override
     public int getRowCount() {
@@ -30,12 +35,12 @@ public class ProdutosTableModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 5;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        String[] vet = {"Código", "Nome", "Fabricante", "Quantidade", "Descrição", "Valor"};
+        String[] vet = {"Código", "Nome", "Fabricante", "Quantidade", "Valor"};
         return vet[columnIndex];
     }
 
@@ -55,7 +60,13 @@ public class ProdutosTableModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Produto aux = produtos.get(rowIndex);
-        Object[] vet = {aux.getCodigo(), aux.getNome(), aux.getFabricante(), aux.getQuantidade(), aux.getDescricao(), aux.getValor()};
+        String fab = "";
+        for (Fabricante fabricante : fabricantes) {
+            if(fabricante.getCodigo() == aux.getFabricante()){
+                fab = fabricante.getNome();
+            }
+        }
+        Object[] vet = {aux.getCodigo(), aux.getNome(), fab, aux.getQuantidade(), aux.getValor()};
         return vet[columnIndex];
     }
 

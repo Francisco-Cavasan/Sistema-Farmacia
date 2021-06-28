@@ -24,11 +24,11 @@ public class ClienteDaoSQL implements ClienteDao {
     @Override
     public void create(Cliente cliente) throws DataBaseException, DuplicateKeyException {
         if (cliente != null) {
-            String sql = "insert into cliente values(" + cliente.getCPF() + ",  '" + cliente.getNome() + "' , '"
+            String sql = "insert into cliente values(" + cliente.getCPF() + ",  '" + cliente.getNome().trim() + "' , '"
                     + cliente.getTelefone() + "', '"
-                    + cliente.getEmail() + "', '"
+                    + cliente.getEmail().trim() + "', '"
                     + cliente.getDataCadastro() + "', '"
-                    + cliente.getSexo().trim() + "');";
+                    + cliente.getSexo().trim() + "',  '" + cliente.getCodCity() + "');";
             dbm.runSQL(sql);
         } else {
             throw new DataBaseException("Cliente nulo");
@@ -38,11 +38,11 @@ public class ClienteDaoSQL implements ClienteDao {
     @Override
     public void edit(Cliente cliente) throws DataBaseException {
         if (cliente != null) {
-            String sql = "update cliente set nome='" + cliente.getNome() + "' ,telefone= '"
+            String sql = "update cliente set nome='" + cliente.getNome().trim() + "' ,telefone= '"
                     + cliente.getTelefone() + "',email= '"
-                    + cliente.getEmail() + "', data_cadastro='"
+                    + cliente.getEmail().trim() + "', data_cadastro='"
                     + cliente.getDataCadastro() + "', sexo= '"
-                    + cliente.getSexo() + "' where cliente.cpf = " + cliente.getCPF() + ";";
+                    + cliente.getSexo() + "',cidade='"+ cliente.getCodCity() + "' where cliente.cpf = " + cliente.getCPF() + ";";
             dbm.runSQL(sql);
         } else {
             throw new DataBaseException("Cliente nulo");
@@ -77,7 +77,8 @@ public class ClienteDaoSQL implements ClienteDao {
                 String email = rs.getString("email");
                 String data = rs.getString("data_cadastro");
                 String sexo = rs.getString("sexo");
-                cliente = new Cliente(nome, cpf, telefone, email, data, sexo);
+                int codCity = rs.getInt("cidade");
+                cliente = new Cliente(nome, cpf, telefone, email, data, sexo, codCity);
             }
             return cliente;
 
@@ -112,7 +113,8 @@ public class ClienteDaoSQL implements ClienteDao {
                     String email = rs.getString("email");
                     String data = rs.getString("data_cadastro");
                     String sexo = rs.getString("sexo");
-                    Cliente c = new Cliente(nome, cpf, telefone, email, data, sexo);
+                    int codCity = rs.getInt("cidade");
+                    Cliente c = new Cliente(nome, cpf, telefone, email, data, sexo, codCity);
                     cliente.add(c);
                 }
             }

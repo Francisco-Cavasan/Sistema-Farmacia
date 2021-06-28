@@ -3,11 +3,11 @@ package negocio;
 public class Categoria {
 
     private int codigo;
-    private String descricao;
+    private String nome;
 
     public Categoria(int codigo, String descricao) {
         this.codigo = codigo;
-        this.descricao = descricao;
+        this.nome = descricao;
     }
 
     public int getCodigo() {
@@ -18,12 +18,12 @@ public class Categoria {
         this.codigo = codigo;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
 }

@@ -24,7 +24,7 @@ public class FuncionarioDaoSQL implements FuncionarioDao {
     @Override
     public void create(Funcionario func) throws DataBaseException, DuplicateKeyException {
         if (func != null) {
-            String sql = "insert into funcionario values(" + func.getCPF() + ",  ' " + func.getNome() + " ' , ' "
+            String sql = "insert into funcionario values(" + func.getCPF() + ",  ' " + func.getNome().trim() + " ' , ' "
                     + func.getHash() + " ', ' "
                     + func.getDataNascimento() + " ', ' "
                     + func.getSetor() + " ', ' "

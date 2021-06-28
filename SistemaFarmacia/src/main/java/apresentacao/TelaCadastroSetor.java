@@ -2,6 +2,7 @@ package apresentacao;
 
 import br.univates.system32.db.DataBaseException;
 import br.univates.system32.db.DuplicateKeyException;
+import java.awt.Toolkit;
 import negocio.Setor;
 import persistencia.SetorDaoSQL;
 
@@ -12,6 +13,8 @@ public class TelaCadastroSetor extends javax.swing.JFrame {
     public TelaCadastroSetor() throws DataBaseException {
         initComponents();
         dao = new SetorDaoSQL();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/images/icone.png")));
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,6 +32,7 @@ public class TelaCadastroSetor extends javax.swing.JFrame {
         codigo = new br.univates.system32.components.JMyNumberField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tela de Cadastro de Setor");
         setPreferredSize(new java.awt.Dimension(505, 129));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -116,14 +120,14 @@ public class TelaCadastroSetor extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

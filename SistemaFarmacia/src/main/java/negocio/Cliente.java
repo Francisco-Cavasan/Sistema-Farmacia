@@ -10,22 +10,33 @@ public class Cliente {
     private String email;
     private String dataCadastro;
     private String sexo;
+    private int codCity;
 
-    public Cliente(String nome, long CPF, String telefone, String email, String dataCadastro, String sexo) {
+    public Cliente(String nome, long CPF, String telefone, String email, String dataCadastro, String sexo, int codCity) {
         this.nome = nome;
         this.CPF = CPF;
         this.telefone = telefone;
         this.email = email;
         this.dataCadastro = dataCadastro;
         this.sexo = sexo;
+        this.codCity = codCity;
     }
 
-    public Cliente(String nome, long CPF, String telefone, String dataCadastro, String sexo) {
+    public Cliente(String nome, long CPF, String telefone, String dataCadastro, String sexo, int codCity) {
         this.nome = nome;
         this.CPF = CPF;
         this.telefone = telefone;
         this.dataCadastro = dataCadastro;
         this.sexo = sexo;
+        this.codCity = codCity;
+    }
+
+    public int getCodCity() {
+        return codCity;
+    }
+
+    public void setCodCity(int codCity) {
+        this.codCity = codCity;
     }
 
     public String getNome() {

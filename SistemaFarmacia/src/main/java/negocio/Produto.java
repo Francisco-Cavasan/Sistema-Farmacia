@@ -6,27 +6,38 @@ public class Produto {
 
     private String nome;
     private int codigo;
-    private String fabricante;
+    private int fabricante;
     private String quantidade;
-    private String valor;
+    private Double valor;
     private String descricao;
+    private int categoria;
 
-    public Produto(int codigo, String nome, String fabricante, String quantidade, String valor, String descricao) {
+    public Produto(int codigo, String nome, int fabricante, String quantidade, Double valor, String descricao, int categoria) {
         this.nome = nome;
         this.codigo = codigo;
         this.fabricante = fabricante;
         this.quantidade = quantidade;
         this.valor = valor;
         this.descricao = descricao;
+        this.categoria = categoria;
     }
 
-    public Produto(int codigo, String nome, String fabricante, String quantidade, String valor) {
+    public Produto(int codigo, String nome, int fabricante, String quantidade, Double valor, int categoria) {
         this.nome = nome;
         this.codigo = codigo;
         this.fabricante = fabricante;
         this.quantidade = quantidade;
         this.valor = valor;
         this.descricao = null;
+        this.categoria = categoria;
+    }
+
+    public int getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
     }
 
     public String getNome() {
@@ -45,11 +56,11 @@ public class Produto {
         this.codigo = codigo;
     }
 
-    public String getFabricante() {
+    public int getFabricante() {
         return fabricante;
     }
 
-    public void setFabricante(String fabricante) {
+    public void setFabricante(int fabricante) {
         this.fabricante = fabricante;
     }
 
@@ -61,11 +72,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public String getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioItensVenda" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed72d521-4811-4391-bb96-5f015a6e66a0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaFarmacia"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="idVenda" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select itensVenda.idvenda, itensVenda.cod_prod, itensVenda.quantidade, itensVenda.valor,itensVenda.desconto,vendas.data
+ from itensVenda, vendas
+  where idVenda = $P{idVenda} and
+  vendas.id_venda = itensVenda.idvenda]]>
+	</queryString>
+	<field name="idvenda" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idvenda"/>
+		<property name="com.jaspersoft.studio.field.label" value="idvenda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="itensvenda"/>
+	</field>
+	<field name="cod_prod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cod_prod"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_prod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="itensvenda"/>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="itensvenda"/>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="itensvenda"/>
+	</field>
+	<field name="desconto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="desconto"/>
+		<property name="com.jaspersoft.studio.field.label" value="desconto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="itensvenda"/>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data"/>
+		<property name="com.jaspersoft.studio.field.label" value="data"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vendas"/>
+	</field>
+	<variable name="Soma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="descontoCalc" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{Soma} * $F{desconto}]]></variableExpression>
+	</variable>
+	<variable name="valorTotal" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{Soma} - $V{descontoCalc}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="2" width="250" height="30" uuid="91f3cd3e-6891-41f6-a566-8ac9ff728871"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Itens da venda com ID:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="2" width="100" height="30" uuid="90fb2fb8-8c9e-4a41-88dd-1e32364f1b6e"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{idVenda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="50" width="30" height="14" uuid="84516f2b-79b1-48d3-ab0e-761cef8a6815"/>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="50" width="60" height="14" uuid="587a56b4-97f4-44e2-8e5b-67e7b6d675c4"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="90" height="20" uuid="7f93a09b-e516-4529-ad96-d506eeb8c603">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94a81a79-1d49-4b99-9c5e-292ae8cb12c1"/>
+				</reportElement>
+				<text><![CDATA[ID Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="20" uuid="75f3449e-2cca-4707-b351-ae1a4ebfa254">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f39076b6-247c-4e66-a8dc-146d103b8d57"/>
+				</reportElement>
+				<text><![CDATA[Código Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="297129d8-869e-49a5-8a63-c74e14a18c02">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4adf9b02-4cc9-4be0-8044-ac1f72143154"/>
+				</reportElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="100" height="20" uuid="070998b7-d884-4d0d-8f14-1faf152a3282">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8eefa136-fa0e-4adf-b21b-adbd0821f644"/>
+				</reportElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="e43af43d-7010-4c4f-ab5a-9000206d657e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94a81a79-1d49-4b99-9c5e-292ae8cb12c1"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{idvenda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="20" uuid="f8edf19a-61f4-4dd6-8ca9-14feb4f4a218">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f39076b6-247c-4e66-a8dc-146d103b8d57"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cod_prod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="2b05d98d-0be2-461c-bcf1-479a3259dc09">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4adf9b02-4cc9-4be0-8044-ac1f72143154"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="87" height="20" uuid="365da49f-d93d-437a-867a-678eb4b51e87">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8eefa136-fa0e-4adf-b21b-adbd0821f644"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="0" width="13" height="20" uuid="bdb31274-53fe-4428-8e49-de511ef23363">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="400" y="30" width="65" height="20" uuid="38af0b41-4016-475e-8944-cd2d03993d8a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<text><![CDATA[Valor total: R$]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="465" y="30" width="35" height="19" uuid="c8feeae2-fda1-474e-9409-53512949021a"/>
+				<textFieldExpression><![CDATA[$V{valorTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="10" width="65" height="20" uuid="9d5fa05e-6e57-491b-8656-6ce1af94581a"/>
+				<text><![CDATA[Desconto:  R$]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="465" y="10" width="35" height="20" uuid="f8dc1fb9-97dd-47f5-a1c9-67a3d395c3e5"/>
+				<textFieldExpression><![CDATA[$V{descontoCalc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

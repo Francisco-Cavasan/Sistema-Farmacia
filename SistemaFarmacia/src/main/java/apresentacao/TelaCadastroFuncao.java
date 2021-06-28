@@ -2,6 +2,7 @@ package apresentacao;
 
 import br.univates.system32.db.DataBaseException;
 import br.univates.system32.db.DuplicateKeyException;
+import java.awt.Toolkit;
 
 import negocio.Funcao;
 import persistencia.FuncaoDaoSQL;
@@ -13,6 +14,8 @@ public class TelaCadastroFuncao extends javax.swing.JFrame {
     public TelaCadastroFuncao() throws DataBaseException {
         initComponents();
         dao = new FuncaoDaoSQL();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/images/icone.png")));
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +33,7 @@ public class TelaCadastroFuncao extends javax.swing.JFrame {
         codigo = new br.univates.system32.components.JMyNumberField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tela de Cadastro de Função");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -61,9 +65,9 @@ public class TelaCadastroFuncao extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Código");
+        jLabel1.setText("Código:");
 
-        jLabel2.setText("Descrição");
+        jLabel2.setText("Descrição:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

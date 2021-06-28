@@ -6,8 +6,7 @@ import br.univates.system32.app.ApplicationProcess;
 import br.univates.system32.app.FatalSystemException;
 import br.univates.system32.db.DataBaseException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class SistemaFarmacia extends Application {
 
@@ -18,7 +17,7 @@ public class SistemaFarmacia extends Application {
     }
 
     private SistemaFarmacia() {
-        super("Sistema Farmacia", "SistemaFarmacia");
+        super("SistemaFarmacia", "sistemafarmacia");
     }
 
     @Override
@@ -26,7 +25,7 @@ public class SistemaFarmacia extends Application {
         this.addFirstExecutionProcess(new ApplicationProcess("Criando esquema do banco de dados.") {
             @Override
             public void run() throws FatalSystemException {
-                createDataBaseSchemaGenerationProcess("/resources/sql.sql");
+                createDataBaseSchemaGenerationProcess("/resources/script/sql.sql");
             }
         });
     }

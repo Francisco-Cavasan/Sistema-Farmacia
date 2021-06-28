@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioJornadaCpf" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cf6bc37d-8e1b-4b24-9f02-f36081b5f380">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaFarmacia"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="dataInicialI" class="java.sql.Date"/>
+	<parameter name="dataFinalI" class="java.sql.Date"/>
+	<parameter name="cpf" class="java.lang.Long"/>
+	<parameter name="dataInicialF" class="java.sql.Date"/>
+	<parameter name="dataFinalF" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[select * from jornada where jornada.cpf = $P{cpf}
+ and inicio between $P{dataInicialI} and $P{dataInicialF}
+ and  final between $P{dataFinalI} and $P{dataFinalF}
+]]>
+	</queryString>
+	<field name="inicio" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="inicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="inicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jornada"/>
+	</field>
+	<field name="final" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="final"/>
+		<property name="com.jaspersoft.studio.field.label" value="final"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jornada"/>
+	</field>
+	<field name="cpf" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cpf"/>
+		<property name="com.jaspersoft.studio.field.label" value="cpf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jornada"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jornada"/>
+	</field>
+	<variable name="horaInicial" class="java.lang.String">
+		<variableExpression><![CDATA["00:00"]]></variableExpression>
+	</variable>
+	<variable name="horaFinal" class="java.lang.String">
+		<variableExpression><![CDATA["23:59"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="40" width="261" height="40" uuid="0fe83860-c8c3-4190-929c-de33f6c8a672"/>
+				<textElement>
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[Relatório de Jornada por CPF]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="383" y="57" width="100" height="30" uuid="d25fe40f-1276-4bf1-9bb9-6a6c8d6372c1"/>
+				<textFieldExpression><![CDATA[$P{dataInicialI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="78" width="100" height="30" uuid="e3e01f8e-5e0a-4529-9b37-a41beafd19fb"/>
+				<textFieldExpression><![CDATA[$P{dataFinalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="87" width="100" height="30" uuid="4c06a254-fdab-4004-9ad6-3cc613449a86"/>
+				<textFieldExpression><![CDATA[$P{cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="38" width="100" height="30" uuid="46b50039-a25e-4757-98c6-35102f5c1dcc"/>
+				<textFieldExpression><![CDATA[$P{dataInicialF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="39" width="100" height="30" uuid="654f559c-87ec-41e6-b173-66ff89169012"/>
+				<textFieldExpression><![CDATA[$P{dataFinalF}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
